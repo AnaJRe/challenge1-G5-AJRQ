@@ -6,6 +6,26 @@ const mensajeInput = document.querySelector(".mensaje");
 const copiarButton = document.querySelector(".btn-copiar");
 const encriptarButton = document.querySelector(".btn-encriptar");
 
+copiarButton.addEventListener('click', function() {
+  if (mensajeInput.value.trim().length > 0) {
+    copiarTexto();
+  }
+});
+
+copiarButton.addEventListener('touchstart', function(event) {
+  event.preventDefault(); // Evita el comportamiento táctil predeterminado (por ejemplo, hacer zoom)
+  if (mensajeInput.value.trim().length > 0) {
+    copiarTexto();
+  }
+});
+
+function copiarTexto() {
+  mensaje.select();
+  navigator.clipboard.writeText(mensaje.value);
+  mensaje.value = "";
+  alert("Texto Copiado");
+}
+
 encriptarButton.addEventListener('click', function() {
   if (mensajeInput.value.trim().length > 0) {
     copiarButton.style.display = "inline-block";
