@@ -6,26 +6,6 @@ const mensajeInput = document.querySelector(".mensaje");
 const copiarButton = document.querySelector(".btn-copiar");
 const encriptarButton = document.querySelector(".btn-encriptar");
 
-copiarButton.addEventListener('click', function() {
-  if (mensajeInput.value.trim().length > 0) {
-    copiarTexto();
-  }
-});
-
-copiarButton.addEventListener('touchstart', function(event) {
-  event.preventDefault(); // Evita el comportamiento táctil predeterminado (por ejemplo, hacer zoom)
-  if (mensajeInput.value.trim().length > 0) {
-    copiarTexto();
-  }
-});
-
-function copiarTexto() {
-  mensaje.select();
-  navigator.clipboard.writeText(mensaje.value);
-  mensaje.value = "";
-  alert("Texto Copiado");
-}
-
 encriptarButton.addEventListener('click', function() {
   if (mensajeInput.value.trim().length > 0) {
     copiarButton.style.display = "inline-block";
@@ -88,9 +68,31 @@ function desencriptar(stringDesencriptada) {
     return stringDesencriptada;
 }
 
-function copiar() {
+/*function copiar() {
     mensaje.select();
     navigator.clipboard.writeText(mensaje.value);
     mensaje.value = "";
     alert("Texto Copiado");
+}*/
+
+function copiarTextToClipboard(text) {
+  // Si el navegador admite la API del portapapeles, lo utiliza
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(text)
+      .then(function() {
+        alert("Texto copiado al portapapeles");
+      })
+      .catch(function(error) {
+        console.error("Error al copiar el texto: ", error);
+      });
+  } else {
+    // Si el navegador no admite la API del portapapeles, muestra un mensaje de error.
+    alert("La función de copiar no está soportada en este navegador");
+  }
 }
+
+function copiar() {
+  copiarTextToClipboard(mensaje.value);
+  mensaje.value = "";
+}
+
